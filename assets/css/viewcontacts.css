@@ -1,0 +1,39 @@
+body {
+    background-color: #243860
+}
+
+tbody>tr {
+    background-color: #dddddd;
+}
+
+.user-list {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: white;
+    border-radius: 30px;
+}
+
+#christian {
+    height: 20px;
+}
+
+
+td>img {
+    max-width: 50px;
+}
+
+body.modal-open {
+    position: fixed;
+    overflow: hidden;
+    left: 0;
+    right: 0;
+}
+
+.modal {
+    -webkit-overflow-scrolling: auto;
+    position: fixed;
+    overflow: hidden;
+    left: 0;
+    right: 0;
+    -webkit-overflow-scrolling: auto;
+}
