@@ -24,7 +24,7 @@ if (!empty($login_err)) {
         <form class="form">
             <div class="m-3">
                 <h1 class="my-1">Welcome, <b><?php echo htmlspecialchars($_SESSION["username"]); ?></h1>
-                <h2>Choose What you want to do!</h2>
+                <h2><?php echo ($_SESSION["admin"]) ? "You are an Admin" : "Options" ?></h2>
             </div>
             <div class="container">
                 <div class="row row-col-2 m-4">
@@ -34,6 +34,9 @@ if (!empty($login_err)) {
                 <div class="row row-col-2 m-4">
                     <div class="col"><a href="reset-password.php" class="btn btn-primary w-100">Reset Password</a></div>
                     <div class="col"><a href="logout.php" class="btn btn-primary w-100">Sign Out</a></div>
+                </div>
+                <div class="row row-col-2 m-4">
+                    <div class="col"><a href="register.php" class="btn btn-primary w-100">Create New User</a></div>
                 </div>
             </div>
 

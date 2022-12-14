@@ -14,6 +14,7 @@ $new_password_err = $confirm_password_err = "";
 // Processing form data when form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
+
     // Validate new password
     if (empty(trim($_POST["new_password"]))) {
         $new_password_err = "Please enter the new password.";
@@ -47,7 +48,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             // Set parameters
             $param_password = password_hash($new_password, PASSWORD_DEFAULT);
-            $param_id = $_SESSION['id'];
+
+            if(isset($_POST["id"])){
+                $param_id = trim($_POST["id"]);
+            } else {
+                $param_id = $_SESSION["id"];
+            }
 
             // Attempt to execute the prepared statement
             if (mysqli_stmt_execute($stmt)) {
@@ -85,6 +91,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             
             <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
             <h2>Reset Password</h2>
+            <?php if($_SESSION["admin"]){
+                echo "<div class='from-group'>
+                        <label>Choose User</label>
+                        <select name='id' class='form-select form-control item'>";
+                $sqli = "SELECT id, username FROM users";
+                $results = mysqli_query($conn, $sqli);
+                while($row = mysqli_fetch_array($results)){
+                    echo "<option value=\"".$row['id']."\">".$row['username']."</option>";
+                }
+            } ?>
             <p>Please fill out this form to reset your password.</p>
                 <div class="form-group">
                     <label>New Password</label>
