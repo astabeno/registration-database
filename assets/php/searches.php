@@ -62,9 +62,15 @@ class ContactsTable
             return $list->get_result();
         }
         //search for  name of a contact
-        if (isset($listType)) {
-            $list = $conn->prepare($sqlSelect . ' WHERE name = ? ORDER BY cid DESC');
+        if (isset($listType) && !intval($listType) > 0 ) {
+            $list = $conn->prepare($sqlSelect . ' WHERE LOCATE(?, name)');
             $list->bind_param('s', $listType);
+            $list->execute();
+            return $list->get_result();
+        }
+        if (isset($listType) && intval($listType) > 0 ) {
+            $list = $conn->prepare($sqlSelect . ' WHERE LOCATE(?, wanumber)');
+            $list->bind_param('i', $listType);
             $list->execute();
             return $list->get_result();
         }

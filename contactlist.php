@@ -43,7 +43,7 @@ $result = $table->selectContacts($searchType);
     </header>
     <div class="container">
         <div class="table-responsive user-list">
-            <h1 class="text-center">Contact List</h1>
+            <h1 class="text-center"><?php echo ( intval($searchType) > 0 ) ? "number search" : "name search" ?></h1>
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
               <div class="container-fluid">
                 <a class="navbar-brand" href="contactlist.php?list=all">All Contacts</a>
@@ -65,7 +65,7 @@ $result = $table->selectContacts($searchType);
                     </li>
                   </ul>
                   <form class="d-flex" action="contactlist.php">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search">
+                    <input class="form-control me-2" type="text" placeholder="Name or Phone" aria-label="Search" name="search">
                     <button class="btn btn-outline-success" type="submit">Search</button>
                   </form>
                 </div>

@@ -1,8 +1,8 @@
 <?php
 
 define('DB_SERVER', 'localhost');
-define('DB_USERNAME', 'u981190432_databoss');
-define('DB_PASSWORD', '@K0Ne5As5nHztz');
+define('DB_USERNAME', 'webregistration');
+define('DB_PASSWORD', 'lsj5ifRIOq9GvM5');
 define('DB_NAME', 'u981190432_Registration');
 
 
