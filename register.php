@@ -50,6 +50,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Close statement
             mysqli_stmt_close($stmt);
         }
+
+        $isAdmin = (isset($_POST["isAdmin"])) ? 1 : 0;
     }
 
     // Validate password
@@ -78,11 +80,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($username_err) && empty($password_err) && empty($confirm_password_err)) {
 
         // Prepare an insert statement
-        $sql = "INSERT INTO users (username, password) VALUES (?, ?)";
+        $sql = "INSERT INTO users (username, password, isAdmin) VALUES (?, ?, ?)";
 
         if ($stmt = mysqli_prepare($conn, $sql)) {
             // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "ss", $param_username, $param_password);
+            mysqli_stmt_bind_param($stmt, "ssi", $param_username, $param_password, $isAdmin);
 
             // Set parameters
             $param_username = $username;
@@ -137,6 +139,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <label>Confirm Password</label>
                 <input type="password" name="confirm_password" class="form-control <?php echo(!empty($confirm_password_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $confirm_password; ?>">
                 <span class="invalid-feedback"><?php echo $confirm_password_err; ?></span>
+            </div>
+            <div class="form-check form-check-inline form-group px-3">
+                <input class="form-check-input" type="checkbox" id="isAdmin" value="1" name="isAdmin">
+                <label class="form-check-label" for="passed-off">Grant Admin Rights</label>
             </div>
             <div class="form-group">
                 <input type="submit" class="btn btn-primary" value="Submit">
