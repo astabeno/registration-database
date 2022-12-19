@@ -29,7 +29,7 @@ if (!empty($login_err)) {
             <div class="container">
                 <div class="row row-col-2 m-4">
                     <div class="col"><a href="add-contacts.php" class="btn btn-primary w-100">Add Contacts</a></div>
-                    <div class="col"><a href="contactlist.php?search=all" class="btn btn-primary w-100">View/Manage</a></div>
+                    <div class="col"><a href="contactlist.php" class="btn btn-primary w-100">View/Manage</a></div>
                 </div>
                 <div class="row row-col-2 m-4">
                     <div class="col"><a href="reset-password.php" class="btn btn-primary w-100">Reset Password</a></div>
@@ -39,19 +39,6 @@ if (!empty($login_err)) {
                     <div class="col"><a href="register.php" class="btn btn-primary w-100">Create New User</a></div>
                 </div>
             </div>
-
-            <!-- Username input -->
-            <!-- <div class="mt-3">
-                <p>Contact Management</p>
-                <a href="addNew.php" class="btn btn-primary w-50">Add Contacts</a>
-                <a href="contactlist.php" class="btn btn-primary w-50">View/Manage</a>
-            </div>
-            <div class="mt-5">
-                <p class="mt-3">Account Management</p>
-                <a href="reset-password.php" class="btn btn-primary w-50">Reset Password</a>
-                <a href="logout.php" class="btn btn-primary w-50">Sign Out</a>
-            </div> -->
-            
         </form>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" 

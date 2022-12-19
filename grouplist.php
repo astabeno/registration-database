@@ -3,9 +3,11 @@
 require 'assets/php/session.php';
 
 //stats from database
-require 'assets/php/statsquery.php';
+require 'assets/php/searches.php';
 
+$groups = new GroupTotals();
 
+$group = $_REQUEST['group'];
 ?>
 
 <!DOCTYPE html>
@@ -28,7 +30,7 @@ require 'assets/php/statsquery.php';
     </header>
     <div class="container px-5">
         <div class="table-responsive user-list px-5 mx-5 px-5">
-            <h1 class="text-center">Adgroup Counts</h1>
+            <h1 class="text-center"><?php echo $group . " totals"?></h1>
             <table class="table mt-4">
                 <thead>
                     <tr>
@@ -38,12 +40,12 @@ require 'assets/php/statsquery.php';
                 </thead>
                 <tbody>
                     <?php
-                        $countryList = getCountriesCount(50);
-                        foreach($countryList as $row){
+                        $adsList = $groups->getGroupList($group,30);
+                        foreach($adsList as $row){
                             echo'
                                 <tr>
-                                    <td>'.$row['country'].'</td>
-                                    <td>'.$row['c'].'</td>
+                                    <td>'.$row[$group].'</td>
+                                    <td>'.$row['total'].'</td>
                                 </tr>';
                         };
                     ?>

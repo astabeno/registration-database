@@ -8,19 +8,49 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true){
     header("location: login.php");
     exit;
 }
-if (isset($_REQUEST['list'])){
-  $searchType = $_REQUEST['list'];
-} elseif (isset($_REQUEST['search'])) {
-  $searchType = $_REQUEST['search'];
-}else {
-  $searchType = 'all';
+
+$title = "Showing ";
+
+if (isset($_REQUEST['status'])){
+  $status = $_REQUEST['status'];
+  $title .= $status ." Contacts";
+} else{
+  $status = NULL;
+  $title .= "All Contacts";
+}
+ 
+if(isset($_REQUEST['week'])){
+  $weeksAgo =  $_REQUEST['week'];
+  if($weeksAgo == 0 ) {
+    $title .= " For Current Week";
+  }elseif($weeksAgo == 1){
+    $title .=  " For Last Week";
+  }else{
+    $title .= " For " . $weeksAgo . " Weeks Ago";
+  }
+}else{
+  $weeksAgo = NULL;
+}
+
+if (isset($_REQUEST['user'])){
+  $userId = $_REQUEST['user'];
+  $title .= " For " .$userId;
+} else {
+  $userId = NULL;
+}
+
+if (isset($_REQUEST['search'])) {
+  $search = $_REQUEST['search'];
+  $title = 'Searching for "' . $search . '"';
+} else {
+  $search = NULL;
 }
 
 require 'assets/php/searches.php';
 
 $table = new ContactsTable();
 
-$result = $table->selectContacts($searchType);
+$result = $table->selectContacts($status, $userId ,$weeksAgo, $search);
 ?>
 
 <!DOCTYPE html>
@@ -43,25 +73,25 @@ $result = $table->selectContacts($searchType);
     </header>
     <div class="container">
         <div class="table-responsive user-list">
-            <h1 class="text-center"><?php echo ( intval($searchType) > 0 ) ? "number search" : "name search" ?></h1>
+            <h1 class="text-center"><?php echo $title; ?></h1>
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
               <div class="container-fluid">
-                <a class="navbar-brand" href="contactlist.php?list=all">All Contacts</a>
+                <a class="navbar-brand" href="contactlist.php">All Contacts</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                   <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                   <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                      <a class="nav-link active" aria-current="page" href="contactlist.php?list=user">
+                      <a class="nav-link active" aria-current="page" href=<?php echo '"contactlist.php?user='.$_SESSION['id'].'"'?>>
                         <?php echo $_SESSION['username']."'s contacts"?>
                       </a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" href="contactlist.php?list=called">Called</a>
+                      <a class="nav-link" href="contactlist.php?status=called">Called</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" href="contactlist.php?list=passed">Passed</a>
+                      <a class="nav-link" href="contactlist.php?status=passed">Passed</a>
                     </li>
                   </ul>
                   <form class="d-flex" action="contactlist.php">
@@ -71,16 +101,6 @@ $result = $table->selectContacts($searchType);
                 </div>
               </div>
             </nav>
-            <!-- <div class="form-group m-4">
-                <form class="d-flex justify-content-center" action="" method="get">
-                  <div class="btn-group">
-                    <button class="btn btn-primary" type="submit" name="search" value="all">All Contacts</button>
-                    <button class="btn btn-primary" type="submit" name="search" value="user"></button>
-                    <button class="btn btn-primary" type="submit" name="search" value="passed">passed contacts</button>
-                    <button class="btn btn-primary" type="submit" name="search" value="called">called contacts</button>
-                  </div>
-                </form>
-            </div> -->
             <table class="table mt-4">
                 <thead>
                     <tr>
@@ -215,7 +235,5 @@ echo '
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
         crossorigin="anonymous"></script>
-
-    <!-- <script src="assets/js/view.js"></script> -->
 </body>
 </html>
